@@ -1,6 +1,9 @@
-def convert_minutes(minutes):
-    hours = minutes // 60
-    remaining_minutes = minutes % 60
-    return f"{hours} hr{'s' if hours != 1 else ''} {remaining_minutes} minute{'s' if remaining_minutes != 1 else ''}"
+def remove_duplicates(input_string):
+    result = ""
+    for char in input_string:
+        if char not in result:
+            result += char
+    return result
 
-print(convert_minutes(int(input("input : "))))
+
+print(remove_duplicates(input("enter string: "))) 
