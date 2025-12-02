@@ -1,8 +1,6 @@
-s = input("Enter string: ")
-result = ""
+def convert_minutes(minutes):
+    hours = minutes // 60
+    remaining_minutes = minutes % 60
+    return f"{hours} hr{'s' if hours != 1 else ''} {remaining_minutes} minute{'s' if remaining_minutes != 1 else ''}"
 
-for ch in s:
-    if ch not in result:
-        result += ch
-
-print(result)
+print(convert_minutes(int(input("input : "))))
