@@ -1,9 +1,16 @@
-def remove_duplicates(input_string):
-    result = ""
-    for char in input_string:
-        if char not in result:
-            result += char
-    return result
+def remove_duplicates(s):
+    # this will store the final result without duplicates
+    res = ""
+
+    # go through each character in the string
+    for ch in s:
+        # add character only if not already present
+        if ch not in res:
+            res += ch
+
+    # return the cleaned string
+    return res
 
 
-print(remove_duplicates(input("enter string: "))) 
+s = input("Enter string: ")
+print(remove_duplicates(s))
