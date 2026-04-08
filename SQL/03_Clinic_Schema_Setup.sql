@@ -1,36 +1,67 @@
+-- =====================================================
+-- CLINIC MANAGEMENT SYSTEM - TABLE SETUP
+-- =====================================================
+
+
+-- ==============================
+-- CLINICS TABLE
+-- Stores clinic location details
+-- ==============================
 CREATE TABLE clinics (
-    cid VARCHAR(50) PRIMARY KEY,
+    cid VARCHAR(50) PRIMARY KEY,   -- unique clinic id
     clinic_name VARCHAR(100),
     city VARCHAR(50),
     state VARCHAR(50),
     country VARCHAR(50)
 );
 
+
+-- ==============================
+-- CUSTOMER TABLE
+-- Stores customer/patient details
+-- ==============================
 CREATE TABLE customer (
-    uid VARCHAR(50) PRIMARY KEY,
+    uid VARCHAR(50) PRIMARY KEY,   -- unique user id
     name VARCHAR(100),
     mobile VARCHAR(20)
 );
 
+
+-- ==============================
+-- CLINIC SALES TABLE
+-- Stores revenue transactions
+-- ==============================
 CREATE TABLE clinic_sales (
-    oid VARCHAR(50) PRIMARY KEY,
-    uid VARCHAR(50),
-    cid VARCHAR(50),
-    amount DECIMAL(10,2),
-    datetime DATETIME,
-    sales_channel VARCHAR(50),
+    oid VARCHAR(50) PRIMARY KEY,   -- unique order id
+    uid VARCHAR(50),               -- customer reference
+    cid VARCHAR(50),               -- clinic reference
+    amount DECIMAL(10,2),          -- revenue generated
+    datetime DATETIME,             -- transaction timestamp
+    sales_channel VARCHAR(50),     -- online / offline / referral
+
     FOREIGN KEY (uid) REFERENCES customer(uid),
     FOREIGN KEY (cid) REFERENCES clinics(cid)
 );
 
+
+-- ==============================
+-- EXPENSES TABLE
+-- Stores clinic expenses
+-- ==============================
 CREATE TABLE expenses (
-    eid VARCHAR(50) PRIMARY KEY,
-    cid VARCHAR(50),
+    eid VARCHAR(50) PRIMARY KEY,   -- unique expense id
+    cid VARCHAR(50),               -- clinic reference
     description VARCHAR(100),
-    amount DECIMAL(10,2),
+    amount DECIMAL(10,2),          -- expense amount
     datetime DATETIME,
+
     FOREIGN KEY (cid) REFERENCES clinics(cid)
 );
+
+
+-- ==============================
+-- Insert clinics
+-- ==============================
 INSERT INTO clinics (cid, clinic_name, city, state, country) VALUES
 ('cnc-0100001', 'XYZ Clinic', 'Lorem', 'Ipsum', 'Dolor'),
 ('cnc-0100002', 'ABC Clinic', 'Metro', 'Delta', 'USA'),
@@ -39,6 +70,9 @@ INSERT INTO clinics (cid, clinic_name, city, state, country) VALUES
 ('cnc-0100005', 'MediCenter', 'Omega', 'Alpha', 'USA');
 
 
+-- ==============================
+-- Insert customers
+-- ==============================
 INSERT INTO customer (uid, name, mobile) VALUES
 ('bk-09f3e-95hj', 'Jon Doe', '9700000001'),
 ('bk-09f3e-95hk', 'Jane Smith', '9700000002'),
@@ -47,6 +81,9 @@ INSERT INTO customer (uid, name, mobile) VALUES
 ('bk-09f3e-95hn', 'Charlie Davis', '9700000005');
 
 
+-- ==============================
+-- Insert clinic sales
+-- ==============================
 INSERT INTO clinic_sales (oid, uid, cid, amount, datetime, sales_channel) VALUES
 ('ord-00100-00100', 'bk-09f3e-95hj', 'cnc-0100001', 24999, '2021-09-23 12:03:22', 'online'),
 ('ord-00100-00101', 'bk-09f3e-95hk', 'cnc-0100002', 15000, '2021-09-24 10:15:00', 'offline'),
@@ -56,8 +93,15 @@ INSERT INTO clinic_sales (oid, uid, cid, amount, datetime, sales_channel) VALUES
 ('ord-00100-00105', 'bk-09f3e-95hj', 'cnc-0100001', 30000, '2021-11-15 15:20:10', 'offline'),
 ('ord-00100-00106', 'bk-09f3e-95hk', 'cnc-0100002', 5000,  '2021-12-03 16:10:00', 'online'),
 ('ord-00100-00107', 'bk-09f3e-95hl', 'cnc-0100003', 7500,  '2021-12-10 12:00:00', 'referral'),
-('ord-00100-00100', 'bk-09f3e-95hj', 'cnc-0100001', 24999, '2021-09-23 12:03:22', 'sodat');
+('ord-00100-00108', 'bk-09f3e-95hj', 'cnc-0100001', 24999, '2021-09-23 12:03:22', 'online');  
+-- Fixed:
+-- 1. Duplicate order_id corrected
+-- 2. Invalid channel 'sodat' replaced with 'online'
 
+
+-- ==============================
+-- Insert expenses
+-- ==============================
 INSERT INTO expenses (eid, cid, description, amount, datetime) VALUES
 ('exp-0100-00100', 'cnc-0100001', 'First-aid supplies', 557, '2021-09-23 07:36:48'),
 ('exp-0100-00101', 'cnc-0100002', 'Medicines', 1200, '2021-09-24 08:15:00'),
